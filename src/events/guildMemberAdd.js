@@ -1,5 +1,5 @@
 const {getWelcomeMessageEmbed} = require("../domain/serverManager");
-const {WELCOME_CONFIG} = require("../config/config");
+const {WELCOME_CONFIG} = require("../config/welcome.json");
 
 function sendWelcomeEmbed(bot, member) {
     try {
