@@ -107,4 +107,4 @@ dist
 .idea/
 
 # Database
-*_db/
+mega_databases/
