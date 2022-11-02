@@ -105,3 +105,6 @@ dist
 
 # IDE
 .idea/
+
+# Database
+*_db/
