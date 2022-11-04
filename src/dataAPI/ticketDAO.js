@@ -23,7 +23,7 @@ async function removeTicketGuest(ticketID, guestID) {
 }
 
 async function removeTicket(ticketID) {
-    return await tickets.delete(`${ticketID}`);
+    return tickets.delete(`${ticketID}`);
 }
 
 module.exports = {

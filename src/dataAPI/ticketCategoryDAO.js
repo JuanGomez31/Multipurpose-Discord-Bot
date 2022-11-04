@@ -17,7 +17,7 @@ async function getTicketsCategories() {
 }
 
 async function getTicketsCategoryByID(categoryID) {
-    return await ticketCategories.has(`${categoryID}`) ? ticketCategories.get(`${id}`) : null;
+    return ticketCategories.has(`${categoryID}`) ? ticketCategories.get(`${id}`) : null;
 }
 
 async function updateTicketCategoryTranscriptionChannelID(categoryID, transcriptionChannelID) {
@@ -31,7 +31,7 @@ async function removeTicketCategoryRole(categoryID, roleID) {
 }
 
 async function removeTicketCategory(categoryID) {
-    return await ticketCategories.delete(`${categoryID}`);
+    return ticketCategories.delete(`${categoryID}`);
 }
 
 

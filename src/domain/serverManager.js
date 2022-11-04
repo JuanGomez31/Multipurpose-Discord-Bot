@@ -1,4 +1,5 @@
 const {EmbedBuilder} = require("discord.js");
+const {PermissionFlagsBits} = require("discord-api-types/v10");
 
 function getWelcomeMessageEmbed(member, config) {
     return new EmbedBuilder()
@@ -16,8 +17,18 @@ async function createChannel(guild, name, type, permissions, parentID) {
     })
 }
 
+function memberHavePermission(member, permission) {
+    return member.permissions.has(permission);
+}
+
+function memberIsAdmin(member) {
+    return member.permissions.has(PermissionFlagsBits.Administrator)
+}
+
 
 module.exports = {
     getWelcomeMessageEmbed,
-    createChannel
+    createChannel,
+    memberHavePermission,
+    memberIsAdmin
 }
