@@ -18,10 +18,6 @@ class SlashCommand {
         return this.data;
     }
 
-    getCategory() {
-        return this.category;
-    }
-
     getFile() {
         return this.file;
     }

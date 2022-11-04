@@ -6,6 +6,7 @@ const Events = require("./Events");
 const Files = require("./Files");
 const SlashCommand = require("./SlashCommand");
 const ContextMenu = require("./ContextMenu");
+const SlashSubCommand = require("./SlashSubCommand");
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 class Bot {
@@ -21,7 +22,9 @@ class Bot {
     }
 
     async registerInteractions() {
-        let interactions =  [].concat(SlashCommand.getSlashCommandsData(), ContextMenu.getContextMenusData())
+        let interactions =  [].concat(SlashCommand.getSlashCommandsData(),
+            ContextMenu.getContextMenusData(),
+            SlashSubCommand.getSlashSubCommandsData())
         await rest.put(
             Routes.applicationCommands(this.instance.application.id),
             {body: interactions},

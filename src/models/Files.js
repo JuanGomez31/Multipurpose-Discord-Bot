@@ -20,6 +20,15 @@ class Files {
         return arrayOfFiles;
     }
 
+    static getAllDirectoriesOfRoute(dirPath, arrayOfFiles = []) {
+        for(let file of files(dirPath)) {
+            if(this.#isDirectory(dirPath, file)) {
+                arrayOfFiles.push(path.join(__dirname, goBackToSrcDirectory , dirPath, file))
+            }
+        }
+        return arrayOfFiles;
+    }
+
     static getParentDirectoryName(file) {
         return path.dirname(file).split(path.sep).pop();
     }
