@@ -13,6 +13,5 @@ module.exports = {
         } else {
             await interaction.reply({content: INSUFFICIENT_PERMISSIONS, ephemeral: true})
         }
-
     }
 }

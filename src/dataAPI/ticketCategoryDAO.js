@@ -16,7 +16,11 @@ async function getTicketsCategories() {
     return await ticketCategories.datos();
 }
 
-async function getTicketsCategoryByID(categoryID) {
+function getTicketsCategoriesCount() {
+    return ticketCategories.size();
+}
+
+function getTicketsCategoryByID(categoryID) {
     return ticketCategories.has(`${categoryID}`) ? ticketCategories.get(`${id}`) : null;
 }
 
@@ -30,7 +34,7 @@ async function removeTicketCategoryRole(categoryID, roleID) {
     return await ticketCategories.set(`${categoryID}.roles`, roles);
 }
 
-async function removeTicketCategory(categoryID) {
+function deleteTicketCategory(categoryID) {
     return ticketCategories.delete(`${categoryID}`);
 }
 
@@ -39,8 +43,9 @@ module.exports = {
     insertTicketCategory,
     insertTicketCategoryRole,
     getTicketsCategories,
+    getTicketsCategoriesCount,
     getTicketsCategoryByID,
     updateTicketCategoryTranscriptionChannelID,
     removeTicketCategoryRole,
-    removeTicketCategory
+    deleteTicketCategory
 }
