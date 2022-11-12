@@ -7,13 +7,12 @@ const {TICKET_CATEGORY_CREATED, MAX_TICKET_CATEGORIES_REACHED} = require("../con
 
 async function createTicketCategory(guild, name, description, role, transcriptionChannel) {
     let categoriesCount = getTicketsCategoriesCount();
-    if (categoriesCount < DISCORD_MAX_CATEGORIES) {
-        let channel = await createChannel(guild, name, ChannelType.GuildCategory, getNewCategoryPermissions(guild, role))
-        await insertTicketCategory(guild.id, channel.id, name, description, role.id, transcriptionChannel.id ?? false);
-        return TICKET_CATEGORY_CREATED;
-    } else {
+    if (categoriesCount > DISCORD_MAX_CATEGORIES) {
         return MAX_TICKET_CATEGORIES_REACHED;
     }
+    let channel = await createChannel(guild, name, ChannelType.GuildCategory, getNewCategoryPermissions(guild, role))
+    await insertTicketCategory(guild.id, channel.id, name, description, role.id, transcriptionChannel.id ?? false);
+    return TICKET_CATEGORY_CREATED;
 }
 
 function removeTicketCategory(guild, categoryID) {
