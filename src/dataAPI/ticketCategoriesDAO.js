@@ -21,7 +21,7 @@ function getTicketsCategoriesCount() {
 }
 
 function getTicketsCategoryByID(guildID, categoryID) {
-    return ticketCategories.has(`${guildID}.${categoryID}`) ? ticketCategories.get(`${guildID}`) : null;
+    return ticketCategories.has(`${guildID}.${categoryID}`) ? ticketCategories.get(`${guildID}.${categoryID}`) : null;
 }
 
 async function updateTicketCategoryTranscriptionChannelID(guildID, categoryID, transcriptionChannelID) {
