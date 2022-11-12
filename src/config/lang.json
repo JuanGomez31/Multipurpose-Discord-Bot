@@ -1,6 +1,14 @@
 {
+  "---ERROR_MESSAGES--": "THIS IS A COMMENT IGNORE",
+
+  "MAX_CHANNELS_IN_CATEGORY_REACHED": "No puedo crear mas canales en esta categoria",
+  "MAX_CHANNELS_IN_GUILD_REACHED": "No puedo crear mas canales en este servidor",
   "INSUFFICIENT_PERMISSIONS": "No tienes permisos suficientes para realizar esta acción",
   "MAX_TICKET_CATEGORIES_REACHED": "Has llegado al máximo de categorias",
+
+
+
+  "---SUCCESSFUL_MESSAGES--": "THIS IS A COMMENT IGNORE",
 
   "TICKET_CATEGORY_CREATED": "Se ha creado correctamente la categoria de tickets"
 

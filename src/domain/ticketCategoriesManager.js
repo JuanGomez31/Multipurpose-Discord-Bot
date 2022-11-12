@@ -1,13 +1,14 @@
-const {createChannel} = require("./serverManager");
+const {createChannel, canCreateChannelInGuild} = require("./serverManager");
 const {PermissionsBitField} = require("discord.js");
 const {ChannelType} = require("discord-api-types/v10");
 const {insertTicketCategory, getTicketsCategoriesCount, deleteTicketCategory, getTicketsCategories} = require("../dataAPI/ticketCategoriesDAO");
-const DISCORD_MAX_CATEGORIES = 25;
-const {TICKET_CATEGORY_CREATED, MAX_TICKET_CATEGORIES_REACHED} = require("../config/lang.json");
+const {MAX_TICKET_CATEGORIES} = require("../config/system-limits.json");
+const {TICKET_CATEGORY_CREATED, MAX_TICKET_CATEGORIES_REACHED, MAX_CHANNELS_IN_GUILD_REACHED} = require("../config/lang.json");
 
 async function createTicketCategory(guild, name, description, role, transcriptionChannel) {
-    let categoriesCount = getTicketsCategoriesCount();
-    if (categoriesCount > DISCORD_MAX_CATEGORIES) {
+    if (canCreateChannelInGuild(guild)) {
+        return MAX_CHANNELS_IN_GUILD_REACHED;
+    } else if (await canCreateNewTicketCategory(guild.id)) {
         return MAX_TICKET_CATEGORIES_REACHED;
     }
     let channel = await createChannel(guild, name, ChannelType.GuildCategory, getNewCategoryPermissions(guild, role))
@@ -31,6 +32,10 @@ async function getTicketCategoriesOptions(guildID) {
     return response;
 }
 
+async function canCreateNewTicketCategory(guildID) {
+    let categories = await getTicketsCategories();
+    return Object.keys(categories[guildID]).length <= MAX_TICKET_CATEGORIES;
+}
 
 
 function getNewCategoryPermissions(guild, role) {
