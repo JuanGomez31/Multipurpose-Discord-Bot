@@ -2,28 +2,28 @@
 const db = require('megadb');
 const tickets = new db.crearDB('tickets', 'tickets_db');
 
-async function insertTicket(id, userID) {
-    return await tickets.set(`${id}`, {user: userID, assigned: null, guests: []});
+async function insertTicket(guildID, id, userID) {
+    return await tickets.set(`${guildID}.${id}`, {user: userID, assigned: null, guests: []});
 }
 
-async function insertTicketGuest(ticketID, guestID) {
-    let guests = await tickets.get(`${ticketID}.guests`);
+async function insertTicketGuest(guildID, ticketID, guestID) {
+    let guests = await tickets.get(`${guildID}.${ticketID}.guests`);
     guests.push(guestID);
-    return await tickets.set(`${ticketID}.guests`, guests);
+    return await tickets.set(`${guildID}.${ticketID}.guests`, guests);
 }
 
-async function updateAssignedUserID(ticketID, userID) {
-    return await tickets.set(`${ticketID}.assigned`, userID);
+async function updateAssignedUserID(guildID, ticketID, userID) {
+    return await tickets.set(`${guildID}.${ticketID}.assigned`, userID);
 }
 
-async function removeTicketGuest(ticketID, guestID) {
-    let guests = await tickets.get(`${ticketID}.guests`);
+async function removeTicketGuest(guildID, ticketID, guestID) {
+    let guests = await tickets.get(`${guildID}.${ticketID}.guests`);
     guests.remove(guestID);
-    return await tickets.set(`${ticketID}.guests`, guests);
+    return await tickets.set(`${guildID}.${ticketID}.guests`, guests);
 }
 
-async function removeTicket(ticketID) {
-    return tickets.delete(`${ticketID}`);
+async function removeTicket(guildID, ticketID) {
+    return tickets.delete(`${guildID}.${ticketID}`);
 }
 
 module.exports = {
