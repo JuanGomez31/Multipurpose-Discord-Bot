@@ -1,7 +1,7 @@
 const {createChannel} = require("./serverManager");
 const {PermissionsBitField} = require("discord.js");
 const {ChannelType} = require("discord-api-types/v10");
-const {insertTicketCategory, getTicketsCategoriesCount, deleteTicketCategory, getTicketsCategories} = require("../dataAPI/ticketCategoryDAO");
+const {insertTicketCategory, getTicketsCategoriesCount, deleteTicketCategory, getTicketsCategories} = require("../dataAPI/ticketCategoriesDAO");
 const DISCORD_MAX_CATEGORIES = 25;
 const {TICKET_CATEGORY_CREATED, MAX_TICKET_CATEGORIES_REACHED} = require("../config/lang.json");
 
