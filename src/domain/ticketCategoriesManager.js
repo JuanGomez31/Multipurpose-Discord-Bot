@@ -25,7 +25,7 @@ async function getTicketCategoriesOptions(guildID) {
     let categories = await getTicketsCategories();
     for(let id in categories[guildID]) {
         response.push({
-            name: categories[id].name,
+            name: categories[guildID][id].name,
             value: id
         })
     }
