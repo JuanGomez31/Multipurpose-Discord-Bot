@@ -11,7 +11,7 @@ function getWelcomeMessageEmbed(member, config) {
 async function createChannel(guild, name, type, permissions, parentID) {
     return await guild.channels.create({
         name: name,
-        parentId: parentID,
+        parent: parentID,
         type: type,
         permissionOverwrites: permissions
     })
