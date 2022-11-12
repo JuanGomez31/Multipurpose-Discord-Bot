@@ -37,6 +37,18 @@ function getSlashCommandJSON() {
                                 .setRequired(false)
                         )
                 )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('open')
+                .setDescription('Open ticket')
+                .addStringOption(option =>
+                    option
+                        .setName("category")
+                        .setDescription("Ticket category")
+                        .setRequired(true)
+                        .setAutocomplete(true)
+                )
         );
 }
 
