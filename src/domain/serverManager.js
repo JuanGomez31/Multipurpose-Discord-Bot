@@ -19,11 +19,11 @@ async function createChannel(guild, name, type, permissions, parentID) {
 }
 
 function canCreateChannelInGuild(guild) {
-    return guild.channels.cache.size === MAX_CHANNELS_IN_GUILD
+    return guild.channels.cache.size < MAX_CHANNELS_IN_GUILD
 }
 
 function canCreateChannelInCategory(guild, category) {
-    return guild.channels.cache.get(category).children.cache.size === MAX_CHANNELS_IN_CATEGORY;
+    return guild.channels.cache.get(category).children.cache.size < MAX_CHANNELS_IN_CATEGORY;
 }
 
 function memberHavePermission(member, permission) {

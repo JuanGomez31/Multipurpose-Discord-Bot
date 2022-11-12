@@ -6,9 +6,9 @@ const {MAX_TICKET_CATEGORIES} = require("../config/system-limits.json");
 const {TICKET_CATEGORY_CREATED, MAX_TICKET_CATEGORIES_REACHED, MAX_CHANNELS_IN_GUILD_REACHED} = require("../config/lang.json");
 
 async function createTicketCategory(guild, name, description, role, transcriptionChannel) {
-    if (canCreateChannelInGuild(guild)) {
+    if (!canCreateChannelInGuild(guild)) {
         return MAX_CHANNELS_IN_GUILD_REACHED;
-    } else if (await canCreateNewTicketCategory(guild.id)) {
+    } else if (!await canCreateNewTicketCategory(guild.id)) {
         return MAX_TICKET_CATEGORIES_REACHED;
     }
     let channel = await createChannel(guild, name, ChannelType.GuildCategory, getNewCategoryPermissions(guild, role))
@@ -34,6 +34,9 @@ async function getTicketCategoriesOptions(guildID) {
 
 async function canCreateNewTicketCategory(guildID) {
     let categories = await getTicketsCategories();
+    if(!categories[guildID]) {
+        return true;
+    }
     return Object.keys(categories[guildID]).length <= MAX_TICKET_CATEGORIES;
 }
 

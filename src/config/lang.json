@@ -1,16 +1,28 @@
 {
-  "---ERROR_MESSAGES--": "THIS IS A COMMENT IGNORE",
+  "--------ERROR_MESSAGES--------": "THIS IS A COMMENT IGNORE",
+
+  "----PERMISSIONS----": "THIS IS A COMMENT IGNORE",
+
+  "INSUFFICIENT_PERMISSIONS": "No tienes permisos suficientes para realizar esta acción",
+
+  "----DISCORD_LIMITS----": "THIS IS A COMMENT IGNORE",
 
   "MAX_CHANNELS_IN_CATEGORY_REACHED": "No puedo crear mas canales en esta categoria",
   "MAX_CHANNELS_IN_GUILD_REACHED": "No puedo crear mas canales en este servidor",
-  "INSUFFICIENT_PERMISSIONS": "No tienes permisos suficientes para realizar esta acción",
+
+  "----TICKET_CATEGORIES----": "THIS IS A COMMENT IGNORE",
+
   "MAX_TICKET_CATEGORIES_REACHED": "Has llegado al máximo de categorias",
 
 
+  "----TICKETS----": "THIS IS A COMMENT IGNORE",
 
-  "---SUCCESSFUL_MESSAGES--": "THIS IS A COMMENT IGNORE",
+  "MEMBER_ALREADY_HAVE_TICKET": "Ya tienes un ticket abierto en esta categoria",
 
-  "TICKET_CATEGORY_CREATED": "Se ha creado correctamente la categoria de tickets"
+
+  "--------SUCCESSFUL_MESSAGES--------": "THIS IS A COMMENT IGNORE",
+
+  "TICKET_CATEGORY_CREATED": "Se ha creado correctamente la categoria de tickets",
   "TICKET_CREATED": "Se ha creado tu ticket"
 
 }
