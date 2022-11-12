@@ -7,7 +7,7 @@ module.exports = {
     name: 'channelDelete',
     run(channel, bot) {
         if(channel.type === ChannelType.GuildCategory) {
-            removeTicketCategory(channel.id)
+            removeTicketCategory(channel.guild.id, channel.id)
         }
     }
 }

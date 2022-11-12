@@ -9,21 +9,21 @@ async function createTicketCategory(guild, name, description, role, transcriptio
     let categoriesCount = getTicketsCategoriesCount();
     if (categoriesCount < DISCORD_MAX_CATEGORIES) {
         let channel = await createChannel(guild, name, ChannelType.GuildCategory, getNewCategoryPermissions(guild, role))
-        await insertTicketCategory(channel.id, name, description, role.id, transcriptionChannel.id ?? false);
+        await insertTicketCategory(guild.id, channel.id, name, description, role.id, transcriptionChannel.id ?? false);
         return TICKET_CATEGORY_CREATED;
     } else {
         return MAX_TICKET_CATEGORIES_REACHED;
     }
 }
 
-function removeTicketCategory(categoryID) {
-    deleteTicketCategory(categoryID);
+function removeTicketCategory(guild, categoryID) {
+    deleteTicketCategory(guild.id, categoryID);
 }
 
-async function getTicketCategoriesOptions() {
+async function getTicketCategoriesOptions(guildID) {
     let response = []
     let categories = await getTicketsCategories();
-    for(let id in categories) {
+    for(let id in categories[guildID]) {
         response.push({
             name: categories[id].name,
             value: id

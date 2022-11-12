@@ -2,14 +2,14 @@
 const db = require('megadb');
 const ticketCategories = new db.crearDB('categories', 'tickets_db');
 
-async function insertTicketCategory(id, name, description, roleID, transcriptionChannelID) {
-    return await ticketCategories.set(`${id}`, {name: name, description: description, roles: [roleID], transcriptionChannel: transcriptionChannelID});
+async function insertTicketCategory(guildID, id, name, description, roleID, transcriptionChannelID) {
+    return await ticketCategories.set(`${guildID}.${id}`, {name: name, description: description, roles: [roleID], transcriptionChannel: transcriptionChannelID});
 }
 
-async function insertTicketCategoryRole(categoryID, roleID) {
-    let roles = await ticketCategories.get(`${categoryID}.roles`);
+async function insertTicketCategoryRole(guildID, categoryID, roleID) {
+    let roles = await ticketCategories.get(`${guildID}.${categoryID}.roles`);
     roles.push(roleID);
-    return await ticketCategories.set(`${categoryID}.roles`, roles);
+    return await ticketCategories.set(`${guildID}.${categoryID}.roles`, roles);
 }
 
 async function getTicketsCategories() {
@@ -20,22 +20,22 @@ function getTicketsCategoriesCount() {
     return ticketCategories.size();
 }
 
-function getTicketsCategoryByID(categoryID) {
-    return ticketCategories.has(`${categoryID}`) ? ticketCategories.get(`${id}`) : null;
+function getTicketsCategoryByID(guildID, categoryID) {
+    return ticketCategories.has(`${guildID}.${categoryID}`) ? ticketCategories.get(`${id}`) : null;
 }
 
-async function updateTicketCategoryTranscriptionChannelID(categoryID, transcriptionChannelID) {
-    return await ticketCategories.set(`${categoryID}.transcriptionChannel`, transcriptionChannelID);
+async function updateTicketCategoryTranscriptionChannelID(guildID, categoryID, transcriptionChannelID) {
+    return await ticketCategories.set(`${guildID}.${categoryID}.transcriptionChannel`, transcriptionChannelID);
 }
 
-async function removeTicketCategoryRole(categoryID, roleID) {
-    let roles = await ticketCategories.get(`${categoryID}.roles`);
+async function removeTicketCategoryRole(guildID, categoryID, roleID) {
+    let roles = await ticketCategories.get(`${guildID}.${categoryID}.roles`);
     roles.remove(roleID);
-    return await ticketCategories.set(`${categoryID}.roles`, roles);
+    return await ticketCategories.set(`${guildID}.${categoryID}.roles`, roles);
 }
 
-function deleteTicketCategory(categoryID) {
-    return ticketCategories.delete(`${categoryID}`);
+function deleteTicketCategory(guildID, categoryID) {
+    return ticketCategories.delete(`${guildID}.${categoryID}`);
 }
 
 
