@@ -26,7 +26,7 @@ async function removeTicketGuest(guildID, ticketID, guestID) {
     return await tickets.set(`${guildID}.${ticketID}.guests`, guests);
 }
 
-async function removeTicket(guildID, ticketID) {
+function removeTicket(guildID, categoryID, ticketID) {
     return tickets.delete(`${guildID}.${ticketID}`);
 }
 

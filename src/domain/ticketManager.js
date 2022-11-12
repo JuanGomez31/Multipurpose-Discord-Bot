@@ -1,5 +1,5 @@
 const {getTicketsCategoryByID} = require("../dataAPI/ticketCategoriesDAO");
-const {insertTicket, getTickets} = require("../dataAPI/ticketsDAO");
+const {insertTicket, getTickets, removeTicket} = require("../dataAPI/ticketsDAO");
 const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory} = require("./serverManager");
 const {ChannelType} = require("discord-api-types/v10");
 const {MAX_CHANNELS_IN_CATEGORY_REACHED, MAX_CHANNELS_IN_GUILD_REACHED, TICKET_CREATED, MEMBER_ALREADY_HAVE_TICKET} = require("../config/lang.json");
@@ -21,6 +21,9 @@ async function createTicket(guild, member, category) {
     return `${TICKET_CREATED} <#${channel.id}>`;
 }
 
+function deleteTicket(guildID, channelID) {
+    removeTicket(guildID, channelID)
+}
 
 function getNewTicketPermissions(guild, member, roles) {
     let permissions = [
@@ -42,7 +45,6 @@ function getNewTicketPermissions(guild, member, roles) {
     return permissions;
 }
 
-
 async function memberCanCreateTicket(guildID, memberID) {
     let tickets = await getTickets()
     for (let ticketID in tickets[guildID]) {
@@ -56,5 +58,6 @@ async function memberCanCreateTicket(guildID, memberID) {
 
 
 module.exports = {
-    createTicket
+    createTicket,
+    deleteTicket
 }
