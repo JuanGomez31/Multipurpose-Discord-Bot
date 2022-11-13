@@ -6,7 +6,6 @@ function loadContextMenus() {
     let commandsFiles = Files.getAllFiles(SOURCE_CONTEXT_MENU_FILES);
     for (let file of commandsFiles) {
         let sourceFile = require(file);
-        console.log(sourceFile)
         new ContextMenu(sourceFile.data.name, sourceFile.data.toJSON(), sourceFile);
     }
 }

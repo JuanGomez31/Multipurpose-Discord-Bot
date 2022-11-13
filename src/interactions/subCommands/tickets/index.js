@@ -54,6 +54,17 @@ function getSlashCommandJSON() {
             subcommand
                 .setName('close')
                 .setDescription('Close ticket')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('add')
+                .setDescription('Add a member to the ticket')
+                .addUserOption(option =>
+                    option
+                        .setName("member")
+                        .setDescription("Added memebr")
+                        .setRequired(true)
+                )
         );
 }
 

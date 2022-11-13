@@ -1,7 +1,11 @@
 {
   "--------EMBED_LANG_DATA--------": "THIS IS A COMMENT IGNORE",
 
-  "----TICKETS_LONGS_EMBED_DATA----": "THIS IS A COMMENT IGNORE",
+  "--TICKET_MEMBER_ADDED_EMBED_DATA--": "THIS IS A COMMENT IGNORE",
+
+  "MEMBER_ADDED_DESCRIPTION": "${member} fue añadido al ticket por ${author}",
+
+  "--TICKETS_LOGS_EMBED_DATA--": "THIS IS A COMMENT IGNORE",
 
   "LOG_TICKET_EMBED": "Ticket de ${categoryName} cerrado",
   "OWNER_OF_THE_TICKET_FIELD": "Propietario del ticket",
