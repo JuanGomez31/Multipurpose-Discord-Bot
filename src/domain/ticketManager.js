@@ -1,31 +1,31 @@
-const {getTicketsCategoryByID} = require("../dataAPI/ticketCategoriesDAO");
-const {insertTicket, getTickets, removeTicket} = require("../dataAPI/ticketsDAO");
-const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory} = require("./serverManager");
+const {insertTicket, getTickets, deleteTicket} = require("../dataAPI/ticketsDAO");
+const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory, getSimpleEmbed} = require("./serverManager");
 const {ChannelType} = require("discord-api-types/v10");
 const {MAX_CHANNELS_IN_CATEGORY_REACHED, MAX_CHANNELS_IN_GUILD_REACHED, TICKET_CREATED, MEMBER_ALREADY_HAVE_TICKET} = require("../config/lang.json");
 const {PermissionsBitField} = require("discord.js");
 
 
 async function createTicket(guild, member, category) {
-    let categoryData = await getTicketsCategoryByID(guild.id, category);
     if (!canCreateChannelInGuild(guild)) {
         return MAX_CHANNELS_IN_GUILD_REACHED;
-    } else if (!canCreateChannelInCategory(guild, category)) {
+    } else if (!canCreateChannelInCategory(guild, category.id)) {
         return MAX_CHANNELS_IN_CATEGORY_REACHED;
     } else if (!await memberCanCreateTicket(guild.id, member.id)) {
         return MEMBER_ALREADY_HAVE_TICKET;
     }
-    let permissions = getNewTicketPermissions(guild, member, categoryData.roles)
-    let channel = await createChannel(guild, `t-${member.id}`, ChannelType.GuildText, permissions, category);
-    await insertTicket(guild.id, channel.id, member.id);
+    let permissions = await getNewTicketPermissions(guild, member, category.roles)
+    let embed = getSimpleEmbed(category.name, category.description);
+    let channel = await createChannel(guild, `t-${member.id}`, ChannelType.GuildText, permissions, category.id);
+    channel.send({embeds: [embed]}).catch();
+    await insertTicket(guild.id, channel.id, member.id, category.id);
     return `${TICKET_CREATED} <#${channel.id}>`;
 }
 
-function deleteTicket(guildID, channelID) {
-    removeTicket(guildID, channelID)
+function removeTicket(guildID, channelID) {
+    deleteTicket(guildID, channelID)
 }
 
-function getNewTicketPermissions(guild, member, roles) {
+async function getNewTicketPermissions(guild, member, roles) {
     let permissions = [
         {
             id: guild.id,
@@ -36,7 +36,7 @@ function getNewTicketPermissions(guild, member, roles) {
             allow: [PermissionsBitField.Flags.ViewChannel]
         }
     ];
-    for(let role of roles) {
+    for (let role of roles) {
         permissions.push({
             id: role,
             allow: [PermissionsBitField.Flags.ViewChannel]
@@ -46,18 +46,13 @@ function getNewTicketPermissions(guild, member, roles) {
 }
 
 async function memberCanCreateTicket(guildID, memberID) {
-    let tickets = await getTickets()
-    for (let ticketID in tickets[guildID]) {
-        if (tickets[guildID][ticketID].user === memberID) {
-            return false;
-        }
-    }
-    return true;
+    let tickets = await getTickets(guildID);
+    return !tickets.find((ticket) => ticket.user = memberID);
 }
 
 
 
 module.exports = {
     createTicket,
-    deleteTicket
+    removeTicket
 }

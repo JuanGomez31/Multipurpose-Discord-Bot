@@ -71,5 +71,6 @@ module.exports = {
     createTicketCategory,
     removeTicketCategory,
     updateDeletedTicketCategoryTranscriptionChannel,
-    getTicketCategoriesOptions
+    getTicketCategoriesOptions,
+    getCategoryByID
 }

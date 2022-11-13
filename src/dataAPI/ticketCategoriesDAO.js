@@ -1,11 +1,11 @@
 'use strict';
 const mongoose = require("mongoose");
 const schema = new mongoose.Schema({
-    id: {type: String, match: /[A-Za-z0-9]+/},
+    id: {type: String, match: /[0-9]+/},
     guildID: { type: String, match: /[0-9]+/},
     name: { type: String },
     description: { type: String },
-    roles: { type: Array, default: [] },
+    roles: { type: Array, default: [], match: /[0-9]+/ },
     transcriptionChannel: { type: String },
 });
 const TicketCategory = mongoose.model("ticket-categories", schema)

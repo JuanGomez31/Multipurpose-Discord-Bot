@@ -9,6 +9,13 @@ function getWelcomeMessageEmbed(member, config) {
         .addFields(config.fields)
 }
 
+function getSimpleEmbed(title, description) {
+    return new EmbedBuilder()
+        .setTitle(title)
+        .setColor(0x990214)
+        .setDescription(description);
+}
+
 async function createChannel(guild, name, type, permissions, parentID) {
     return await guild.channels.create({
         name: name,
@@ -37,6 +44,7 @@ function memberIsAdmin(member) {
 
 module.exports = {
     getWelcomeMessageEmbed,
+    getSimpleEmbed,
     createChannel,
     canCreateChannelInGuild,
     canCreateChannelInCategory,
