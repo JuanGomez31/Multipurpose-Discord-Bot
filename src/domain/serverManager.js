@@ -1,6 +1,12 @@
 const {EmbedBuilder} = require("discord.js");
 const {PermissionFlagsBits} = require("discord-api-types/v10");
 const {MAX_CHANNELS_IN_GUILD, MAX_CHANNELS_IN_CATEGORY} = require("../config/discord-limits.json");
+const {
+    OWNER_OF_THE_TICKET_FIELD, OWNER_OF_THE_TICKET_ID_FIELD,
+    CLOSED_BY_FIELD, CLOSED_BY_ID_FIELD, DATE_OF_CLOSE_FIELD,
+    LOG_TICKET_EMBED
+} = require("../config/lang.json");
+
 const moment = require("moment");
 
 function getSimpleEmbed(title, description) {
@@ -12,14 +18,14 @@ function getSimpleEmbed(title, description) {
 
 function getTicketLogEmbed(categoryName, ownerID, memberID) {
     return new EmbedBuilder()
-        .setTitle(`Ticket de ${categoryName} cerrado`)
+        .setTitle(LOG_TICKET_EMBED.replace("${categoryName}", categoryName))
         .setColor(0x990214)
         .addFields(
-            {name: "Propietario del ticket", value: `<@${ownerID}>`},
-            {name: "ID del propietario del ticket", value: `${ownerID}`},
-            {name: "Cerro el ticket", value: `<@${memberID}>`},
-            {name: "ID del que cerro el ticket", value: `${memberID}`},
-            {name: "Fecha de cierre", value: `${getActualDateWithCustomFormat('MMMM Do YYYY, h:mm:ss a')}`},
+            {name: OWNER_OF_THE_TICKET_FIELD, value: `<@${ownerID}>`},
+            {name: OWNER_OF_THE_TICKET_ID_FIELD, value: `${ownerID}`},
+            {name: CLOSED_BY_FIELD, value: `<@${memberID}>`},
+            {name: CLOSED_BY_ID_FIELD, value: `${memberID}`},
+            {name: DATE_OF_CLOSE_FIELD, value: `${getActualDateWithCustomFormat('MMMM Do YYYY, h:mm:ss a')}`},
         );
 }
 

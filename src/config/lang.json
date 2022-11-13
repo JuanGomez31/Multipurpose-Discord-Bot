@@ -1,4 +1,16 @@
 {
+  "--------EMBED_LANG_DATA--------": "THIS IS A COMMENT IGNORE",
+
+  "----TICKETS_LONGS_EMBED_DATA----": "THIS IS A COMMENT IGNORE",
+
+  "LOG_TICKET_EMBED": "Ticket de ${categoryName} cerrado",
+  "OWNER_OF_THE_TICKET_FIELD": "Propietario del ticket",
+  "OWNER_OF_THE_TICKET_ID_FIELD": "ID del propietario del ticket",
+  "CLOSED_BY_FIELD": "Cerrado por",
+  "CLOSED_BY_ID_FIELD": "ID del que cerro el ticket",
+  "DATE_OF_CLOSE_FIELD": "Fecha de cierre",
+
+
   "--------ERROR_MESSAGES--------": "THIS IS A COMMENT IGNORE",
 
   "----PERMISSIONS_ERROR----": "THIS IS A COMMENT IGNORE",
