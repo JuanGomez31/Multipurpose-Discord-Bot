@@ -10,6 +10,19 @@ function getSimpleEmbed(title, description) {
         .setDescription(description);
 }
 
+function getTicketLogEmbed(categoryName, ownerID, memberID) {
+    return new EmbedBuilder()
+        .setTitle(`Ticket de ${categoryName} cerrado`)
+        .setColor(0x990214)
+        .addFields(
+            {name: "Propietario del ticket", value: `<@${ownerID}>`},
+            {name: "ID del propietario del ticket", value: `${ownerID}`},
+            {name: "Cerro el ticket", value: `<@${memberID}>`},
+            {name: "ID del que cerro el ticket", value: `${memberID}`},
+            {name: "Fecha de cierre", value: `${getActualDateWithCustomFormat('MMMM Do YYYY, h:mm:ss a')}`},
+        );
+}
+
 function getActualDateWithCustomFormat(format) {
     return moment().format(format);
 }
@@ -42,6 +55,7 @@ function memberIsAdmin(member) {
 
 module.exports = {
     getSimpleEmbed,
+    getTicketLogEmbed,
     getActualDateWithCustomFormat,
     createChannel,
     canCreateChannelInGuild,

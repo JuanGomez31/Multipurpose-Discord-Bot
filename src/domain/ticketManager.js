@@ -1,8 +1,7 @@
 const discordTranscripts = require('discord-html-transcripts');
 const {insertTicket, getTickets, deleteTicket} = require("../dataAPI/ticketsDAO");
-const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory, getSimpleEmbed, memberIsAdmin,
-    getActualDateWithCustomFormat
-} = require("./serverManager");
+const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory,
+    getSimpleEmbed, memberIsAdmin, getTicketLogEmbed } = require("./serverManager");
 const {ChannelType} = require("discord-api-types/v10");
 const {MAX_CHANNELS_IN_CATEGORY_REACHED, MAX_CHANNELS_IN_GUILD_REACHED,
     TICKET_CREATED, MEMBER_ALREADY_HAVE_TICKET, TICKET_CLOSED,
@@ -42,23 +41,21 @@ async function closeTicket(guild, channel, member) {
     }
     let category = await getCategoryByID(guild.id, ticket.categoryID);
     if(category && category.transcriptionChannel !== 'false') {
-        await sendTicketTranscription(guild, channel, category, member);
+        await sendTicketTranscription(guild, channel, category, member, ticket);
     }
     channel.delete();
     return TICKET_CLOSED;
 }
 
-async function sendTicketTranscription(guild, channel, category, member) {
+async function sendTicketTranscription(guild, channel, category, member, ticket) {
+    let transcriptionChannel = guild.channels.cache.get(category.transcriptionChannel);
     let transcriptionFile = await discordTranscripts.createTranscript(channel, {
         limit: -1, returnType: 'attachment',
         filename: `${channel.name}.html`, saveImages: true,
         poweredBy: false
     });
-    guild.channels.cache.get(category.transcriptionChannel)
-        .send({
-            content: `Ticket cerrado por <@${member.id}> \n Fecha: ${getActualDateWithCustomFormat('MMMM Do YYYY, h:mm:ss a')}`,
-            files: [transcriptionFile]
-        }).catch();
+    transcriptionChannel.send({embeds: [getTicketLogEmbed(category.name, ticket.user , member.id)]}).catch();
+    transcriptionChannel.send({files: [transcriptionFile]}).catch();
 }
 
 async function getNewTicketPermissions(guild, member, roles) {
