@@ -1,12 +1,17 @@
 const {EmbedBuilder} = require("discord.js");
 const {PermissionFlagsBits} = require("discord-api-types/v10");
 const {MAX_CHANNELS_IN_GUILD, MAX_CHANNELS_IN_CATEGORY} = require("../config/discord-limits.json");
+const moment = require("moment");
 
 function getSimpleEmbed(title, description) {
     return new EmbedBuilder()
         .setTitle(title)
         .setColor(0x990214)
         .setDescription(description);
+}
+
+function getActualDateWithCustomFormat(format) {
+    return moment().format(format);
 }
 
 async function createChannel(guild, name, type, permissions, parentID) {
@@ -37,6 +42,7 @@ function memberIsAdmin(member) {
 
 module.exports = {
     getSimpleEmbed,
+    getActualDateWithCustomFormat,
     createChannel,
     canCreateChannelInGuild,
     canCreateChannelInCategory,

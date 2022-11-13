@@ -1,6 +1,8 @@
 const discordTranscripts = require('discord-html-transcripts');
 const {insertTicket, getTickets, deleteTicket} = require("../dataAPI/ticketsDAO");
-const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory, getSimpleEmbed, memberIsAdmin} = require("./serverManager");
+const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory, getSimpleEmbed, memberIsAdmin,
+    getActualDateWithCustomFormat
+} = require("./serverManager");
 const {ChannelType} = require("discord-api-types/v10");
 const {MAX_CHANNELS_IN_CATEGORY_REACHED, MAX_CHANNELS_IN_GUILD_REACHED,
     TICKET_CREATED, MEMBER_ALREADY_HAVE_TICKET, TICKET_CLOSED,
@@ -40,19 +42,23 @@ async function closeTicket(guild, channel, member) {
     }
     let category = await getCategoryByID(guild.id, ticket.categoryID);
     if(category && category.transcriptionChannel !== 'false') {
-        await sendTicketTranscription(guild, channel, category);
+        await sendTicketTranscription(guild, channel, category, member);
     }
     channel.delete();
     return TICKET_CLOSED;
 }
 
-async function sendTicketTranscription(guild, channel, category) {
+async function sendTicketTranscription(guild, channel, category, member) {
     let transcriptionFile = await discordTranscripts.createTranscript(channel, {
         limit: -1, returnType: 'attachment',
         filename: `${channel.name}.html`, saveImages: true,
         poweredBy: false
     });
-    guild.channels.cache.get(category.transcriptionChannel).send({files: [transcriptionFile] }).catch();
+    guild.channels.cache.get(category.transcriptionChannel)
+        .send({
+            content: `Ticket cerrado por <@${member.id}> \n Fecha: ${getActualDateWithCustomFormat('MMMM Do YYYY, h:mm:ss a')}`,
+            files: [transcriptionFile]
+        }).catch();
 }
 
 async function getNewTicketPermissions(guild, member, roles) {
