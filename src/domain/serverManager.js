@@ -2,13 +2,6 @@ const {EmbedBuilder} = require("discord.js");
 const {PermissionFlagsBits} = require("discord-api-types/v10");
 const {MAX_CHANNELS_IN_GUILD, MAX_CHANNELS_IN_CATEGORY} = require("../config/discord-limits.json");
 
-function getWelcomeMessageEmbed(member, config) {
-    return new EmbedBuilder()
-        .setTitle(config.title)
-        .setDescription(`<@${member.id}>`)
-        .addFields(config.fields)
-}
-
 function getSimpleEmbed(title, description) {
     return new EmbedBuilder()
         .setTitle(title)
