@@ -1,11 +1,16 @@
+const discordTranscripts = require('discord-html-transcripts');
 const {insertTicket, getTickets, deleteTicket} = require("../dataAPI/ticketsDAO");
-const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory, getSimpleEmbed} = require("./serverManager");
+const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory, getSimpleEmbed, memberIsAdmin} = require("./serverManager");
 const {ChannelType} = require("discord-api-types/v10");
-const {MAX_CHANNELS_IN_CATEGORY_REACHED, MAX_CHANNELS_IN_GUILD_REACHED, TICKET_CREATED, MEMBER_ALREADY_HAVE_TICKET} = require("../config/lang.json");
+const {MAX_CHANNELS_IN_CATEGORY_REACHED, MAX_CHANNELS_IN_GUILD_REACHED,
+    TICKET_CREATED, MEMBER_ALREADY_HAVE_TICKET, TICKET_CLOSED,
+    THIS_IS_NOT_A_TICKET, INSUFFICIENT_PERMISSIONS} = require("../config/lang.json");
 const {PermissionsBitField} = require("discord.js");
+const {getCategoryByID} = require("./ticketCategoriesManager");
 
 
-async function createTicket(guild, member, category) {
+async function createTicket(guild, member, categoryID) {
+    let category = await getCategoryByID(guild.id, categoryID);
     if (!canCreateChannelInGuild(guild)) {
         return MAX_CHANNELS_IN_GUILD_REACHED;
     } else if (!canCreateChannelInCategory(guild, category.id)) {
@@ -23,6 +28,31 @@ async function createTicket(guild, member, category) {
 
 function removeTicket(guildID, channelID) {
     deleteTicket(guildID, channelID)
+}
+
+async function closeTicket(guild, channel, member) {
+    let ticket = await getTicketByID(guild.id, channel.id);
+    if(!ticket) {
+        return THIS_IS_NOT_A_TICKET;
+    }
+    if(ticket.user !== member.id && ticket.assignedID !== member.id && !memberIsAdmin(member)) {
+        return INSUFFICIENT_PERMISSIONS;
+    }
+    let category = await getCategoryByID(guild.id, ticket.categoryID);
+    if(category && category.transcriptionChannel !== 'false') {
+        await sendTicketTranscription(guild, channel, category);
+    }
+    channel.delete();
+    return TICKET_CLOSED;
+}
+
+async function sendTicketTranscription(guild, channel, category) {
+    let transcriptionFile = await discordTranscripts.createTranscript(channel, {
+        limit: -1, returnType: 'attachment',
+        filename: `${channel.name}.html`, saveImages: true,
+        poweredBy: false
+    });
+    guild.channels.cache.get(category.transcriptionChannel).send({files: [transcriptionFile] }).catch();
 }
 
 async function getNewTicketPermissions(guild, member, roles) {
@@ -50,9 +80,14 @@ async function memberCanCreateTicket(guildID, memberID) {
     return !tickets.find((ticket) => ticket.user = memberID);
 }
 
+async function getTicketByID(guildID, channelID) {
+    let tickets = await getTickets(guildID);
+    return tickets.find((ticket) => ticket.id = channelID);
+}
 
 
 module.exports = {
     createTicket,
-    removeTicket
+    removeTicket,
+    closeTicket
 }

@@ -7,7 +7,7 @@ function loadSubCommands() {
     for (let subCommandRoute of subCommandsRoutes) {
         let subCommandData = require(`${subCommandRoute}\\index.js`).getSlashCommandJSON();
         for(let subCommand of subCommandData.options) {
-            if(subCommand.options[0].options) {
+            if(subCommand.options[0] && subCommand.options[0].options) {
                 readSubCommandsGroups(subCommandRoute, subCommand.options, subCommandData.name, subCommandData, subCommand.name)
             } else {
                 let commandFile = require(`${subCommandRoute}\\commands\\${subCommand.name}`)

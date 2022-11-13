@@ -36,7 +36,6 @@ function memberIsAdmin(member) {
 
 
 module.exports = {
-    getWelcomeMessageEmbed,
     getSimpleEmbed,
     createChannel,
     canCreateChannelInGuild,

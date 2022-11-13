@@ -49,6 +49,11 @@ function getSlashCommandJSON() {
                         .setRequired(true)
                         .setAutocomplete(true)
                 )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('close')
+                .setDescription('Close ticket')
         );
 }
 

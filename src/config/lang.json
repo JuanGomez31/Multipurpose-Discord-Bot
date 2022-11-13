@@ -1,28 +1,36 @@
 {
   "--------ERROR_MESSAGES--------": "THIS IS A COMMENT IGNORE",
 
-  "----PERMISSIONS----": "THIS IS A COMMENT IGNORE",
+  "----PERMISSIONS_ERROR----": "THIS IS A COMMENT IGNORE",
 
   "INSUFFICIENT_PERMISSIONS": "No tienes permisos suficientes para realizar esta acción",
 
-  "----DISCORD_LIMITS----": "THIS IS A COMMENT IGNORE",
+  "----DISCORD_LIMITS_ERROR----": "THIS IS A COMMENT IGNORE",
 
   "MAX_CHANNELS_IN_CATEGORY_REACHED": "No puedo crear mas canales en esta categoria",
   "MAX_CHANNELS_IN_GUILD_REACHED": "No puedo crear mas canales en este servidor",
 
-  "----TICKET_CATEGORIES----": "THIS IS A COMMENT IGNORE",
+  "----TICKET_CATEGORIES_ERROR----": "THIS IS A COMMENT IGNORE",
 
   "MAX_TICKET_CATEGORIES_REACHED": "Has llegado al máximo de categorias",
 
 
-  "----TICKETS----": "THIS IS A COMMENT IGNORE",
+  "----TICKETS_ERROR----": "THIS IS A COMMENT IGNORE",
 
+  "THIS_IS_NOT_A_TICKET": "Este canal no es un ticket",
   "MEMBER_ALREADY_HAVE_TICKET": "Ya tienes un ticket abierto en esta categoria",
 
 
   "--------SUCCESSFUL_MESSAGES--------": "THIS IS A COMMENT IGNORE",
 
+  "--TICKET_CATEGORIES_SUCCESSFUL--": "THIS IS A COMMENT IGNORE",
+
   "TICKET_CATEGORY_CREATED": "Se ha creado correctamente la categoria de tickets",
-  "TICKET_CREATED": "Se ha creado tu ticket"
+
+  "--TICKETS_SUCCESSFUL--": "THIS IS A COMMENT IGNORE",
+
+  "TICKET_CREATED": "Se ha creado tu ticket",
+  "TICKET_CLOSED": "Se ha cerrado el ticket correctamente"
+
 
 }
