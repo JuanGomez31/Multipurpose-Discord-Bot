@@ -65,6 +65,17 @@ function getSlashCommandJSON() {
                         .setDescription("Added memebr")
                         .setRequired(true)
                 )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('remove')
+                .setDescription('Remove a member from the ticket')
+                .addUserOption(option =>
+                    option
+                        .setName("member")
+                        .setDescription("Removed member")
+                        .setRequired(true)
+                )
         );
 }
 

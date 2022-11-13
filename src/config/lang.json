@@ -1,6 +1,10 @@
 {
   "--------EMBED_LANG_DATA--------": "THIS IS A COMMENT IGNORE",
 
+  "--TICKET_MEMBER_REMOVED_EMBED_DATA--": "THIS IS A COMMENT IGNORE",
+
+  "MEMBER_REMOVED_DESCRIPTION": "${member} fue removido del ticket por ${author}",
+
   "--TICKET_MEMBER_ADDED_EMBED_DATA--": "THIS IS A COMMENT IGNORE",
 
   "MEMBER_ADDED_DESCRIPTION": "${member} fue añadido al ticket por ${author}",

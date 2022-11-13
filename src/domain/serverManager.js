@@ -5,7 +5,7 @@ const {MAX_CHANNELS_IN_GUILD, MAX_CHANNELS_IN_CATEGORY} = require("../config/dis
 const {
     OWNER_OF_THE_TICKET_FIELD, OWNER_OF_THE_TICKET_ID_FIELD,
     CLOSED_BY_FIELD, CLOSED_BY_ID_FIELD, DATE_OF_CLOSE_FIELD,
-    LOG_TICKET_EMBED, MEMBER_ADDED_DESCRIPTION
+    LOG_TICKET_EMBED, MEMBER_ADDED_DESCRIPTION, MEMBER_REMOVED_DESCRIPTION
 } = require("../config/lang.json");
 
 
@@ -33,6 +33,14 @@ function getAddedMemberEmbed(memberID, authorID) {
     return new EmbedBuilder()
         .setColor(0x990214)
         .setDescription(MEMBER_ADDED_DESCRIPTION
+            .replace("${member}", `<@${memberID}>`)
+            .replace("${author}", `<@${authorID}>`));
+}
+
+function getRemovedMemberEmbed(memberID, authorID) {
+    return new EmbedBuilder()
+        .setColor(0x990214)
+        .setDescription(MEMBER_REMOVED_DESCRIPTION
             .replace("${member}", `<@${memberID}>`)
             .replace("${author}", `<@${authorID}>`));
 }
@@ -70,6 +78,7 @@ function memberIsAdmin(member) {
 module.exports = {
     getSimpleEmbed,
     getTicketLogEmbed,
+    getRemovedMemberEmbed,
     getAddedMemberEmbed,
     getActualDateWithCustomFormat,
     createChannel,

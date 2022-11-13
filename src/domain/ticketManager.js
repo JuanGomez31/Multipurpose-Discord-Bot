@@ -1,7 +1,7 @@
 const discordTranscripts = require('discord-html-transcripts');
 const {insertTicket, getTickets, deleteTicket} = require("../dataAPI/ticketsDAO");
 const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory,
-    getSimpleEmbed, memberIsAdmin, getTicketLogEmbed, getAddedMemberEmbed
+    getSimpleEmbed, memberIsAdmin, getTicketLogEmbed, getAddedMemberEmbed, getRemovedMemberEmbed
 } = require("./serverManager");
 const {ChannelType} = require("discord-api-types/v10");
 const {MAX_CHANNELS_IN_CATEGORY_REACHED, MAX_CHANNELS_IN_GUILD_REACHED,
@@ -38,6 +38,18 @@ async function addMemberToTicket(guild, channel, member, user) {
     }
     await channel.permissionOverwrites.create(user.id, {ViewChannel: true});
     return getAddedMemberEmbed(user.id, member.id);
+}
+
+async function removeMemberFromTicket(guild, channel, member, user) {
+    let ticket = await getTicketByID(guild.id, channel.id);
+    if(!ticket) {
+        return THIS_IS_NOT_A_TICKET;
+    }
+    if(ticket.assignedID !== member.id && !memberIsAdmin(member)) {
+        return INSUFFICIENT_PERMISSIONS;
+    }
+    channel.permissionOverwrites.delete(user.id);
+    return getRemovedMemberEmbed(user.id, member.id);
 }
 
 function removeTicket(guildID, channelID) {
@@ -105,6 +117,7 @@ async function getTicketByID(guildID, channelID) {
 module.exports = {
     createTicket,
     addMemberToTicket,
+    removeMemberFromTicket,
     removeTicket,
     closeTicket
 }
