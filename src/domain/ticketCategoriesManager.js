@@ -19,37 +19,39 @@ async function createTicketCategory(guild, name, description, role, transcriptio
     return TICKET_CATEGORY_CREATED;
 }
 
-function removeTicketCategory(guild, categoryID) {
-    deleteTicketCategory(guild.id, categoryID);
+async function removeTicketCategory(guildID, categoryID) {
+    await deleteTicketCategory(guildID, categoryID);
 }
 
 async function updateDeletedTicketCategoryTranscriptionChannel(guildID, channelID) {
-    let categories = await getTicketsCategories();
-    for (let id in categories[guildID]) {
-        if(categories[guildID][id].transcriptionChannel === channelID) {
-            await updateTicketCategoryTranscriptionChannelID(guildID, channelID, false)
+    let categories = await getTicketsCategories(guildID);
+    for (let category of categories) {
+        if(category.transcriptionChannel === channelID) {
+            await updateTicketCategoryTranscriptionChannelID(guildID, category.id, false)
         }
     }
 }
 
 async function getTicketCategoriesOptions(guildID) {
     let response = []
-    let categories = await getTicketsCategories();
-    for(let id in categories[guildID]) {
+    let categories = await getTicketsCategories(guildID);
+    for(let category of categories) {
         response.push({
-            name: categories[guildID][id].name,
-            value: id
+            name: category.name,
+            value: category.id
         })
     }
     return response;
 }
 
+async function getCategoryByID(guildID, categoryID) {
+    let categories = await getTicketsCategories(guildID);
+    return categories.find((category) => category.id = categoryID)
+}
+
 async function canCreateNewTicketCategory(guildID) {
-    let categories = await getTicketsCategories();
-    if(!categories[guildID]) {
-        return true;
-    }
-    return Object.keys(categories[guildID]).length <= MAX_TICKET_CATEGORIES;
+    let categories = await getTicketsCategories(guildID);
+    return categories.length <= MAX_TICKET_CATEGORIES;
 }
 
 function getNewCategoryPermissions(guild, role) {

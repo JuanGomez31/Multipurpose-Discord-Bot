@@ -6,11 +6,11 @@ const {deleteTicket} = require("../domain/ticketManager");
 
 module.exports = {
     name: 'channelDelete',
-    run(channel, bot) {
-        if(channel.type === ChannelType.GuildCategory) {
-            removeTicketCategory(channel.guild.id, channel.id)
+    async run(channel, bot) {
+        if (channel.type === ChannelType.GuildCategory) {
+            await removeTicketCategory(channel.guild.id, channel.id)
         } else if (channel.type === ChannelType.GuildText) {
-            deleteTicket(channel.guild.id, channel.id);
+            // deleteTicket(channel.guild.id, channel.id);
             updateDeletedTicketCategoryTranscriptionChannel(channel.guild.id, channel.id).catch();
         }
     }
