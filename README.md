@@ -15,3 +15,4 @@ Developing
 1. Ticket System (Current Working)
 2. Global ban system
 3. Server log system
+4. Multilingual system
