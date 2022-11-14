@@ -1,12 +1,15 @@
 const discordTranscripts = require('discord-html-transcripts');
-const {insertTicket, getTickets, deleteTicket} = require("../dataAPI/ticketsDAO");
+const {insertTicket, getTickets, deleteTicket, insertGuestToTicket, deleteGuestFromTicket} = require("../dataAPI/ticketsDAO");
 const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory,
-    getSimpleEmbed, memberIsAdmin, getTicketLogEmbed, getAddedMemberEmbed, getRemovedMemberEmbed
+    getSimpleEmbed, memberIsAdmin, getTicketLogEmbed, getAddedMemberEmbed, getRemovedMemberEmbed,
+    getSimpleEmbedOnlyDescription
 } = require("./serverManager");
 const {ChannelType} = require("discord-api-types/v10");
 const {MAX_CHANNELS_IN_CATEGORY_REACHED, MAX_CHANNELS_IN_GUILD_REACHED,
     TICKET_CREATED, MEMBER_ALREADY_HAVE_TICKET, TICKET_CLOSED,
-    THIS_IS_NOT_A_TICKET, INSUFFICIENT_PERMISSIONS} = require("../config/lang.json");
+    THIS_IS_NOT_A_TICKET, INSUFFICIENT_PERMISSIONS, GUEST_IS_ALREADY_IN_THE_TICKET,
+    GUEST_ISN_T_IN_THE_TICKET
+} = require("../config/lang.json");
 const {PermissionsBitField} = require("discord.js");
 const {getCategoryByID} = require("./ticketCategoriesManager");
 
@@ -31,11 +34,13 @@ async function createTicket(guild, member, categoryID) {
 async function addMemberToTicket(guild, channel, member, user) {
     let ticket = await getTicketByID(guild.id, channel.id);
     if(!ticket) {
-        return THIS_IS_NOT_A_TICKET;
+        return getSimpleEmbedOnlyDescription(THIS_IS_NOT_A_TICKET);
+    } else if(ticket.guests.find((guestID) => guestID = user.id)) {
+        return getSimpleEmbedOnlyDescription(GUEST_IS_ALREADY_IN_THE_TICKET);
+    } else if(ticket.assignedID !== member.id && !memberIsAdmin(member)) {
+        return getSimpleEmbedOnlyDescription(INSUFFICIENT_PERMISSIONS);
     }
-    if(ticket.assignedID !== member.id && !memberIsAdmin(member)) {
-        return INSUFFICIENT_PERMISSIONS;
-    }
+    await insertGuestToTicket(guild.id, channel.id, user.id);
     await channel.permissionOverwrites.create(user.id, {ViewChannel: true});
     return getAddedMemberEmbed(user.id, member.id);
 }
@@ -43,18 +48,18 @@ async function addMemberToTicket(guild, channel, member, user) {
 async function removeMemberFromTicket(guild, channel, member, user) {
     let ticket = await getTicketByID(guild.id, channel.id);
     if(!ticket) {
-        return THIS_IS_NOT_A_TICKET;
+        return getSimpleEmbedOnlyDescription(THIS_IS_NOT_A_TICKET);
+    } else if(!ticket.guests.find((guestID) => guestID = user.id)) {
+        return getSimpleEmbedOnlyDescription(GUEST_ISN_T_IN_THE_TICKET);
+    } else if(ticket.assignedID !== member.id && !memberIsAdmin(member)) {
+        return getSimpleEmbedOnlyDescription(INSUFFICIENT_PERMISSIONS);
     }
-    if(ticket.assignedID !== member.id && !memberIsAdmin(member)) {
-        return INSUFFICIENT_PERMISSIONS;
-    }
+    await deleteGuestFromTicket(guild.id, channel.id, user.id);
     channel.permissionOverwrites.delete(user.id);
     return getRemovedMemberEmbed(user.id, member.id);
 }
 
-function removeTicket(guildID, channelID) {
-    deleteTicket(guildID, channelID)
-}
+
 
 async function closeTicket(guild, channel, member) {
     let ticket = await getTicketByID(guild.id, channel.id);
@@ -71,6 +76,11 @@ async function closeTicket(guild, channel, member) {
     channel.delete();
     return TICKET_CLOSED;
 }
+
+function removeTicket(guildID, channelID) {
+    deleteTicket(guildID, channelID)
+}
+
 
 async function sendTicketTranscription(guild, channel, category, member, ticket) {
     let transcriptionChannel = guild.channels.cache.get(category.transcriptionChannel);

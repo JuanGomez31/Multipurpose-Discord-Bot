@@ -16,6 +16,12 @@ function getSimpleEmbed(title, description) {
         .setDescription(description);
 }
 
+function getSimpleEmbedOnlyDescription(description) {
+    return new EmbedBuilder()
+        .setColor(0x990214)
+        .setDescription(description);
+}
+
 function getTicketLogEmbed(categoryName, ownerID, memberID) {
     return new EmbedBuilder()
         .setTitle(LOG_TICKET_EMBED.replace("${categoryName}", categoryName))
@@ -77,6 +83,7 @@ function memberIsAdmin(member) {
 
 module.exports = {
     getSimpleEmbed,
+    getSimpleEmbedOnlyDescription,
     getTicketLogEmbed,
     getRemovedMemberEmbed,
     getAddedMemberEmbed,

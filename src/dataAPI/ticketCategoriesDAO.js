@@ -28,9 +28,9 @@ async function getTicketsCategories(guildID) {
     return await TicketCategory.find({ guildID: guildID }).exec();
 }
 
-async function updateTicketCategoryTranscriptionChannelID(guildID, categoryID, transcriptionChannelID) {
+async function updateTicketCategoryTranscriptionChannelID(guildID, oldTranscriptionChannelID, transcriptionChannelID) {
     TicketCategory.updateMany({
-        guildID: guildID, id: categoryID
+        guildID: guildID, transcriptionChannel: oldTranscriptionChannelID
     }, { $set: { transcriptionChannel: transcriptionChannelID }}, function(err, res) {
         if (err) console.log(err);
     });

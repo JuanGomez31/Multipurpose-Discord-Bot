@@ -24,12 +24,7 @@ async function removeTicketCategory(guildID, categoryID) {
 }
 
 async function updateDeletedTicketCategoryTranscriptionChannel(guildID, channelID) {
-    let categories = await getTicketsCategories(guildID);
-    for (let category of categories) {
-        if(category.transcriptionChannel === channelID) {
-            await updateTicketCategoryTranscriptionChannelID(guildID, category.id, false)
-        }
-    }
+    await updateTicketCategoryTranscriptionChannelID(guildID, channelID, false)
 }
 
 async function getTicketCategoriesOptions(guildID) {

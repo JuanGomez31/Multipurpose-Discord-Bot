@@ -21,25 +21,26 @@
 
   "--------ERROR_MESSAGES--------": "THIS IS A COMMENT IGNORE",
 
-  "----PERMISSIONS_ERROR----": "THIS IS A COMMENT IGNORE",
+  "--PERMISSIONS_ERROR--": "THIS IS A COMMENT IGNORE",
 
   "INSUFFICIENT_PERMISSIONS": "No tienes permisos suficientes para realizar esta acción",
 
-  "----DISCORD_LIMITS_ERROR----": "THIS IS A COMMENT IGNORE",
+  "--DISCORD_LIMITS_ERROR--": "THIS IS A COMMENT IGNORE",
 
   "MAX_CHANNELS_IN_CATEGORY_REACHED": "No puedo crear mas canales en esta categoria",
   "MAX_CHANNELS_IN_GUILD_REACHED": "No puedo crear mas canales en este servidor",
 
-  "----TICKET_CATEGORIES_ERROR----": "THIS IS A COMMENT IGNORE",
+  "--TICKET_CATEGORIES_ERROR--": "THIS IS A COMMENT IGNORE",
 
   "MAX_TICKET_CATEGORIES_REACHED": "Has llegado al máximo de categorias",
 
 
-  "----TICKETS_ERROR----": "THIS IS A COMMENT IGNORE",
+  "--TICKETS_ERROR--": "THIS IS A COMMENT IGNORE",
 
   "THIS_IS_NOT_A_TICKET": "Este canal no es un ticket",
   "MEMBER_ALREADY_HAVE_TICKET": "Ya tienes un ticket abierto en esta categoria",
-
+  "GUEST_IS_ALREADY_IN_THE_TICKET": "La persona que intentas añadir ya se encuentra en el ticket",
+  "GUEST_ISN_T_IN_THE_TICKET": "La persona que intentas remover no se encuentra en el ticket",
 
   "--------SUCCESSFUL_MESSAGES--------": "THIS IS A COMMENT IGNORE",
 
