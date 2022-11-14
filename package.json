@@ -1,0 +1,29 @@
+{
+  "name": "multipurpose-discord-bot",
+  "version": "0.0.1",
+  "description": "Bot multiprocessor",
+  "main": "index.js",
+  "scripts": {
+    "run-dev": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuanGomez31/Multipurpose-Discord-Bot.git"
+  },
+  "author": "JuanGomez31",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuanGomez31/Multipurpose-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/JuanGomez31/Multipurpose-Discord-Bot#readme",
+  "dependencies": {
+    "discord-api-types": "^0.37.14",
+    "discord-html-transcripts": "^3.1.2",
+    "discord.js": "14.6.0",
+    "dotenv": "^16.0.2",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.4",
+    "mongoose": "^6.7.2",
+    "mysql2": "^2.3.3"
+  }
+}

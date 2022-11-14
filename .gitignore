@@ -105,3 +105,6 @@ dist
 
 # IDE
 .idea/
+
+# Database
+mega_databases/
