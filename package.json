@@ -1,21 +1,21 @@
 {
-  "name": "codedeveloped-discord-bot",
+  "name": "multipurpose-discord-bot",
   "version": "0.0.1",
-  "description": "Bot oficial de Code Developed",
+  "description": "Bot multiprocessor",
   "main": "index.js",
   "scripts": {
     "run-dev": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Code-Developed/CodeDeveloped-Discord-Bot.git"
+    "url": "git+https://github.com/JuanGomez31/Multipurpose-Discord-Bot.git"
   },
-  "author": "Code Developed",
+  "author": "JuanGomez31",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Code-Developed/CodeDeveloped-Discord-Bot/issues"
+    "url": "https://github.com/JuanGomez31/Multipurpose-Discord-Bot/issues"
   },
-  "homepage": "https://github.com/Code-Developed/CodeDeveloped-Discord-Bot#readme",
+  "homepage": "https://github.com/JuanGomez31/Multipurpose-Discord-Bot#readme",
   "dependencies": {
     "discord-api-types": "^0.37.14",
     "discord-html-transcripts": "^3.1.2",
