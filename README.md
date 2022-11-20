@@ -12,7 +12,7 @@ Developing
 
 ## 🗺️ Road Map
 
-1. Ticket System (Current Working)
-2. Global ban system
+1. Ticket System (Finished)
+2. Global ban system (Current Working)
 3. Server log system
 4. Multilingual system
