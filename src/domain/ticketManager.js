@@ -1,5 +1,8 @@
 const discordTranscripts = require('discord-html-transcripts');
-const {insertTicket, getTickets, deleteTicket, insertGuestToTicket, deleteGuestFromTicket} = require("../dataAPI/ticketsDAO");
+const {
+    insertTicket, getTickets, deleteTicket,
+    insertGuestToTicket, deleteGuestFromTicket, getTicketOnGuildByID
+} = require("../dataAPI/ticketsDAO");
 const {createChannel, canCreateChannelInGuild, canCreateChannelInCategory,
     getSimpleEmbed, memberIsAdmin, getTicketLogEmbed, getAddedMemberEmbed, getRemovedMemberEmbed,
     getSimpleEmbedOnlyDescription
@@ -119,8 +122,7 @@ async function memberCanCreateTicket(guildID, memberID) {
 }
 
 async function getTicketByID(guildID, channelID) {
-    let tickets = await getTickets(guildID);
-    return tickets.find((ticket) => ticket.id = channelID);
+    return await getTicketOnGuildByID(guildID, channelID);
 }
 
 

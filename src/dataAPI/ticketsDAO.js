@@ -49,11 +49,15 @@ async function getTickets(guildID) {
     return await Ticket.find({ guildID: guildID }).exec();
 }
 
+async function getTicketOnGuildByID(guildID, channelID) {
+    return await Ticket.findOne({ guildID: guildID, id: channelID }).exec();
+}
 
 module.exports = {
     insertTicket,
     insertGuestToTicket,
     deleteTicket,
     deleteGuestFromTicket,
-    getTickets
+    getTickets,
+    getTicketOnGuildByID
 }
