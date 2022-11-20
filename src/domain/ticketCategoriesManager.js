@@ -2,8 +2,8 @@ const {createChannel, canCreateChannelInGuild} = require("./serverManager");
 const {PermissionsBitField} = require("discord.js");
 const {ChannelType} = require("discord-api-types/v10");
 const {
-    insertTicketCategory, deleteTicketCategory,
-    getTicketsCategories, updateTicketCategoryTranscriptionChannelID, getTicketCategoryByID
+    insertTicketCategory, deleteTicketCategory, getTicketsCategories,
+    updateDeletedTicketCategoryTranscriptionChannelID, getTicketCategoryByID
 } = require("../dataAPI/ticketCategoriesDAO");
 const {MAX_TICKET_CATEGORIES} = require("../config/system-limits.json");
 const {TICKET_CATEGORY_CREATED, MAX_TICKET_CATEGORIES_REACHED, MAX_CHANNELS_IN_GUILD_REACHED} = require("../config/lang.json");
@@ -24,7 +24,7 @@ async function removeTicketCategory(guildID, categoryID) {
 }
 
 async function updateDeletedTicketCategoryTranscriptionChannel(guildID, channelID) {
-    await updateTicketCategoryTranscriptionChannelID(guildID, channelID, false)
+    await updateDeletedTicketCategoryTranscriptionChannelID(guildID, channelID, false)
 }
 
 async function getTicketCategoriesOptions(guildID) {

@@ -32,7 +32,7 @@ async function getTicketCategoryByID(guildID, categoryID) {
     return await TicketCategory.findOne({ guildID: guildID, id: categoryID }).exec();
 }
 
-async function updateTicketCategoryTranscriptionChannelID(guildID, oldTranscriptionChannelID, transcriptionChannelID) {
+async function updateDeletedTicketCategoryTranscriptionChannelID(guildID, oldTranscriptionChannelID, transcriptionChannelID) {
     TicketCategory.updateMany({
         guildID: guildID, transcriptionChannel: oldTranscriptionChannelID
     }, { $set: { transcriptionChannel: transcriptionChannelID }}, function(err, res) {
@@ -50,6 +50,6 @@ module.exports = {
     insertTicketCategory,
     getTicketsCategories,
     getTicketCategoryByID,
-    updateTicketCategoryTranscriptionChannelID,
+    updateDeletedTicketCategoryTranscriptionChannelID,
     deleteTicketCategory
 }
